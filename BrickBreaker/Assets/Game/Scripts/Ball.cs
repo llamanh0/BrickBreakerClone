@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    public static event EventHandler OnGameOver;
+
     [SerializeField] private float speed = 1f;
 
     private Rigidbody2D _rb;
@@ -14,7 +17,7 @@ public class Ball : MonoBehaviour
 
     private void Launch()
     {
-        float x = Random.Range(0, 2) == 0 ? -1f : 1f;
+        float x = UnityEngine.Random.Range(0, 2) == 0 ? -1f : 1f;
         float y = 1f;
 
         Vector2 direction = new Vector2(x, y).normalized;
@@ -39,6 +42,10 @@ public class Ball : MonoBehaviour
 
             Vector2 newDirection = new Vector2(offset, 1).normalized;
             GetComponent<Rigidbody2D>().velocity = newDirection * speed;
+        }
+        if (collision.gameObject.CompareTag("GameOver"))
+        {
+            OnGameOver?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -3,30 +3,28 @@ using UnityEngine;
 
 public class GridSystem : MonoBehaviour
 {
-    [SerializeField] private GameObject brick_0Prefab;
+    [SerializeField] private GameObject brickPrefab;
     [SerializeField] private Vector2 startPos = new Vector2(-40, 20);
 
-    public int row = 5;
-    public int col = 17;
+    [SerializeField] private LevelDifficultySO levelDifficulty;
 
+
+    private int row;
+    private int col;
     private float _spaceX;
     private float _spaceY;
-    private List<Vector2> _gridList = new List<Vector2>();
+    private readonly List<Vector2> _gridList = new List<Vector2>();
 
     private void Start()
     {
-        if (brick_0Prefab == null) return;
-        _spaceX = brick_0Prefab.gameObject.transform.localScale.x * 5; // 7.5
-        _spaceY = brick_0Prefab.gameObject.transform.localScale.y * 10; // 5
-    }
+        row = levelDifficulty.row;
+        col = levelDifficulty.column;
+        if (brickPrefab == null) return;
+        _spaceX = brickPrefab.gameObject.transform.localScale.x * 5; // 7.5
+        _spaceY = brickPrefab.gameObject.transform.localScale.y * 10; // 5
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            InitializeGrid();
-            PlacePrefabs();
-        }
+        InitializeGrid();
+        PlacePrefabs();
     }
 
     private void InitializeGrid()
@@ -47,7 +45,7 @@ public class GridSystem : MonoBehaviour
         for (int i = 0; i < _gridList.Count; i++) 
         {
             Vector3 spawnPos = new Vector3(_gridList[i].x, _gridList[i].y, 0);
-            Instantiate(brick_0Prefab, spawnPos, Quaternion.identity);
+            Instantiate(brickPrefab, spawnPos, Quaternion.identity);
         }
     }
 }

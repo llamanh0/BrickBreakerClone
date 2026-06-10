@@ -8,16 +8,16 @@ public class Player : MonoBehaviour
     private void Update()
     {
         HandleMovement();
-        ApplyBoundry();
+        ApplyBoundary();
     }
 
     private void HandleMovement()
     {
         float moveInput = Input.GetAxisRaw("Horizontal");
-        transform.Translate(Vector2.right * moveInput * speed *  Time.deltaTime);
+        transform.Translate(Vector2.right * (moveInput * speed * Time.deltaTime));
     }
 
-    private void ApplyBoundry()
+    private void ApplyBoundary()
     {
         Vector3 position = transform.position;
         position.x = Mathf.Clamp(position.x, -boundary, boundary);
