@@ -162,3 +162,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 30
+  _brickBreakPrefab: {fileID: 516086349616373635, guid: 84556a5374817ac4bbc4dd3b0acbfa5e, type: 3}

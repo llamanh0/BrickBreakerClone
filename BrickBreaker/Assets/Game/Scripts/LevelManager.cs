@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         Ball.OnGameOver += Ball_OnGameOver;
+        GameUI.OnLevelDone += GameUI_OnLevelDone;
     }
 
     private void Update()
@@ -60,5 +61,21 @@ public class LevelManager : MonoBehaviour
     private void Ball_OnGameOver(object sender, System.EventArgs e)
     {
         SceneManager.LoadScene(_mainMenuSceneName);
+    }
+
+    private void GameUI_OnLevelDone(object sender, System.EventArgs e)
+    {
+        if(SceneManager.GetActiveScene().name == _Level1SceneName)
+        {
+            SceneManager.LoadScene(_Level2SceneName);
+        }
+        if (SceneManager.GetActiveScene().name == _Level2SceneName)
+        {
+            SceneManager.LoadScene(_Level3SceneName);
+        }
+        if (SceneManager.GetActiveScene().name == _Level3SceneName)
+        {
+            SceneManager.LoadScene(_mainMenuSceneName);
+        }
     }
 }

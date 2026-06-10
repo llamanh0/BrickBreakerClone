@@ -4,8 +4,11 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public static event EventHandler OnGameOver;
+    public static event EventHandler OnBreakBrick;
 
     [SerializeField] private float speed = 1f;
+
+    [SerializeField] private GameObject _brickBreakPrefab;
 
     private Rigidbody2D _rb;
 
@@ -28,6 +31,11 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Brick"))
         {
+            OnBreakBrick?.Invoke(this, EventArgs.Empty);
+
+            GameObject effect = Instantiate(_brickBreakPrefab, collision.transform.position, Quaternion.identity);
+
+            Destroy(effect, 2f);
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Player"))

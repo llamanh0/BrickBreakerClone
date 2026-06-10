@@ -1,8 +1,15 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GridSystem : MonoBehaviour
 {
+    public static event EventHandler<OnLevelStartEventArgs> OnLevelStart;
+    public class OnLevelStartEventArgs : EventArgs
+    {
+        public int brickCount;
+    }
+
     [SerializeField] private GameObject brickPrefab;
     [SerializeField] private Vector2 startPos = new Vector2(-40, 20);
 
@@ -19,6 +26,12 @@ public class GridSystem : MonoBehaviour
     {
         row = levelDifficulty.row;
         col = levelDifficulty.column;
+
+        OnLevelStartEventArgs e = new OnLevelStartEventArgs();
+        e.brickCount = row * col;
+
+        OnLevelStart?.Invoke(this, e);
+
         if (brickPrefab == null) return;
         _spaceX = brickPrefab.gameObject.transform.localScale.x * 5; // 7.5
         _spaceY = brickPrefab.gameObject.transform.localScale.y * 10; // 5
